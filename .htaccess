@@ -1,0 +1,7 @@
+# esto es necesario para que la url no se rompa y permita regresar al index con cualquier url que se tecle
+Options All -Indexes
+
+Options -Multiviews
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [QSA,L]
