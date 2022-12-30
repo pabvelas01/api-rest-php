@@ -5,7 +5,7 @@ class Conexion{
 
         $link = new PDO("mysql:host=localhost;dbname=api-rest","root","");
 
-        $link->exec("set names uff8");
+        $link->exec("set names utf8");
 
         return $link;
     }
