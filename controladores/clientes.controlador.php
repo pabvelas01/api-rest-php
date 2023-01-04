@@ -3,18 +3,20 @@
 class ControladorClientes{
  public function create($datos){
     $json=[];
-    if (isset ($datos["nombres"]) && !preg_match('/^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$/',$datos["nombres"])){
+    if (isset ($datos["nombre"]) && !preg_match('/^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$/',$datos["nombre"])){
         $json=array(
             "status"=>404,
             "detalle"=>"Error en el campo del nombre no permitido, solo letras"
         );
+        return;
        
     }
-    if (isset ($datos["apellidos"]) && !preg_match('/^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$/',$datos["apellidos"])){
+    if (isset ($datos["apellido"]) && !preg_match('/^[a-zA-ZZáéíóúÁÉÍÓÚñÑ]+$/',$datos["apellido"])){
         $json=array(
             "status"=>404,
             "detalle"=>"Error en el campo del apellido no permitido, solo letras"
         );
+        return;
        
     }
     // Validar email
@@ -23,6 +25,7 @@ class ControladorClientes{
             "status"=>404,
             "detalle"=>"Error en el campo del correo no valido, formato incorrecto"
         );
+        return;
        
     }
 
@@ -37,19 +40,37 @@ class ControladorClientes{
                 "status"=>404,
                 "detalle"=>"el email esta repetido"
             );
+            echo json_encode($json,true);
+            return;
         }
     }
 
-    echo json_encode($json,true);
+    
 
     /**
      * Generar credenciales del cliente
      */
-    $id_cliente= str_replace("$","c",crypt($datos["nombre"].$datos["apellidos"].$datos["email"],'2a$dfsdfsdf$$sdfs$'));
-    $llave_secreta_cliente= str_replace("$","a",crypt($datos["email"].$datos["apellidos"].$datos["nombre"],'2a$dfsdfsdf$$sdfs$'));
+    $id_cliente= str_replace("$","c",crypt($datos["nombre"].$datos["apellido"].$datos["email"],'2a$dfsdfsdf$$sdfs$'));
+    $llave_secreta_cliente= str_replace("$","a",crypt($datos["email"].$datos["apellido"].$datos["nombre"],'2a$dfsdfsdf$$sdfs$'));
 
+    $datos=array("nombre"=>$datos["nombre"],
+    "apellido"=>$datos["apellido"],
+    "email"=>$datos["email"],
+    "id_cliente"=>$id_cliente,
+    "create_at"=>date('Y-m-d h:i:s'),
+    "update_at"=>date('Y-m-d h:i:s'),
+    "llave_cliente"=>$llave_secreta_cliente);
 
+    $create = ModeloClientes::create($datos);
    
+    if ($create=="ok"){
+        $json=array(
+            "detalle"=>"se genero sus credenciales de acceso",
+            "credenciales"=>$id_cliente,
+            "llave_secreta"=>$llave_secreta_cliente
+        );
+        echo json_encode($json,true);
+    }
  }
 
  public function index(){

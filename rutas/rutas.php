@@ -33,8 +33,8 @@ echo "<pre>";
                         break;
         case 'registro': if(isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"]=='POST')
                         {
-                            $datos= array("nombres"=> isset($_POST["nombre"])?$_POST["nombre"]:"",
-                            "apellidos"=>isset($_POST["apellido"])?$_POST["apellido"]:"",
+                            $datos= array("nombre"=> isset($_POST["nombre"])?$_POST["nombre"]:"",
+                            "apellido"=>isset($_POST["apellido"])?$_POST["apellido"]:"",
                             "email"=>isset($_POST["email"])?$_POST["email"]:"");
 
                             $clientes = new ControladorClientes();

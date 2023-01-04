@@ -2,6 +2,9 @@
 
 class ControladorCursos{
     public function index(){
+
+        
+
         $cursos= ModeloCursos::index();
         $json=array(
             "detalle"=>$cursos
