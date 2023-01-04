@@ -42,6 +42,12 @@ class ControladorClientes{
 
     echo json_encode($json,true);
 
+    /**
+     * Generar credenciales del cliente
+     */
+    $id_cliente= str_replace("$","c",crypt($datos["nombre"].$datos["apellidos"].$datos["email"],'2a$dfsdfsdf$$sdfs$'));
+    $llave_secreta_cliente= str_replace("$","a",crypt($datos["email"].$datos["apellidos"].$datos["nombre"],'2a$dfsdfsdf$$sdfs$'));
+
 
    
  }
