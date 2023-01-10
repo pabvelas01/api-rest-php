@@ -3,19 +3,21 @@
 class ControladorClientes{
  public function create($datos){
     $json=[];
-    if (isset ($datos["nombre"]) && !preg_match('/^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$/',$datos["nombre"])){
+    if (isset ($datos["nombre"]) && !preg_match('/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/',$datos["nombre"])){
         $json=array(
             "status"=>404,
             "detalle"=>"Error en el campo del nombre no permitido, solo letras"
         );
+        echo json_encode($json,true);
         return;
        
     }
-    if (isset ($datos["apellido"]) && !preg_match('/^[a-zA-ZZáéíóúÁÉÍÓÚñÑ]+$/',$datos["apellido"])){
+    if (isset ($datos["apellido"]) && !preg_match('/^[a-zA-ZZáéíóúÁÉÍÓÚñÑ ]+$/',$datos["apellido"])){
         $json=array(
             "status"=>404,
             "detalle"=>"Error en el campo del apellido no permitido, solo letras"
         );
+        echo json_encode($json,true);
         return;
        
     }
@@ -25,6 +27,7 @@ class ControladorClientes{
             "status"=>404,
             "detalle"=>"Error en el campo del correo no valido, formato incorrecto"
         );
+        echo json_encode($json,true);
         return;
        
     }

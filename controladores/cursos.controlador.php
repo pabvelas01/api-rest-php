@@ -3,13 +3,24 @@
 class ControladorCursos{
     public function index(){
 
-        
+        $clientes = ModeloClientes::index();
+        if (isset($_SERVER["PHP_AUTH_USER"]) && isset($_SERVER["PHP_AUTH_PW"])){
+            
+            foreach($clientes as $key =>$value){
 
-        $cursos= ModeloCursos::index();
-        $json=array(
-            "detalle"=>$cursos
-        );
-        echo json_encode($json,true);
+                if ($_SERVER["PHP_AUTH_USER"] .":". $_SERVER["PHP_AUTH_PW"] ==
+                    $value["id_cliente"] . ":" . $value["llave_secreta"]){
+                        $cursos= ModeloCursos::index();
+                        $json=array(
+                            "detalle"=>$cursos
+                        );
+                        echo json_encode($json,true);
+                }
+
+            }
+            
+          
+        }
     }
 
     public function create(){

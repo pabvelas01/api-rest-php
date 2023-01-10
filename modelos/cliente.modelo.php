@@ -4,8 +4,15 @@ require_once 'conexion.php';
 */
 class ModeloClientes{
     
-    public static function crear($datos){
+    public static function index(){
+        $tabla="clientes";
+        $stmt= Conexion::conectar()->prepare("select * from $tabla");
+        $stmt->execute();
 
+        return $stmt->fetchAll();
+
+        $stmt->close();
+        $stmt=null;
     }
 
     public static function existeCorreo($datos){
@@ -34,7 +41,7 @@ class ModeloClientes{
      
         $stmt -> bindParam(":id_cliente",$datos["id_cliente"], PDO::PARAM_STR);
         $stmt -> bindParam(":email",$datos["email"], PDO::PARAM_STR);
-        $stmt -> bindParam(":llave_secreta",$datos["llave_secreta"], PDO::PARAM_STR);
+        $stmt -> bindParam(":llave_secreta",$datos["llave_cliente"], PDO::PARAM_STR);
         $stmt -> bindParam(":create_at",$datos["create_at"], PDO::PARAM_STR);
         $stmt -> bindParam(":update_at",$datos["update_at"], PDO::PARAM_STR);
         
